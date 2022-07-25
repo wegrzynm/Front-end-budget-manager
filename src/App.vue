@@ -1,10 +1,27 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <router-link to="/" v-show="homePage">
+        <Button :text="'Go back'" :color="'black'"  class="btn-go-back"/>
+    </router-link>
   <router-view/>
 </template>
+
+<script>
+import Button from './components/Button.vue'
+export default {
+  components: {
+    Button
+  },
+  computed: {
+    homePage () {
+      if (this.$route.path != '/') {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -15,16 +32,57 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+input[type=number], input[type=text], select, input[type=date], input[list] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+form {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 50%;
+  margin: auto;
+}
+
+.loader
+{
+    position: absolute;
+    left: 38%;
+    top: auto;
+    z-index: 100;
+}
+
+.btn-go-back
+{
+  width: 80%;
 }
 </style>
