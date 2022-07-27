@@ -9,7 +9,7 @@
     :size="300"
     color="#4CAF50"
     />
-    <form @submit="onSubmit" v-if="!isLoading">
+    <form @submit="onSubmit" v-if="!isLoading && !selectRoute">
         <label for="productName">Product name: </label>
         <input list="products" name="productName" id="product" required v-model="productName" >
         <datalist id="products">
@@ -128,11 +128,15 @@ export default {
         this.productGroup = 1
         this.productPrice = 0
         this.paymentMethod = 1
+        this.isLoading = false
         },
 
         setSelectRoute (option) {
             this.selectRoute = option
-            this.isLoading = option
+
+            if(option == true && this.isLoading == false) {
+                this.$router.push('/expenses') 
+            }
         },
 
         async createProduct () {
@@ -204,9 +208,10 @@ export default {
             }       
         },
         async createExpense(savings) {
+            const cost = parseFloat(this.productQuantity)*parseFloat(this.productPrice)
             const newExpense = {
                 "quantity": this.productQuantity,
-                "cost": (parseInt(this.productQuantity)*parseFloat(this.productPrice)),
+                "cost": cost,
                 "boughtDate": this.boughtDate,
                 "paymentMethod": this.paymentMethod,
                 "savings": savings,
@@ -286,6 +291,7 @@ export default {
     border-radius: 10px;
     border: 2px solid #2c3e50;
     overflow: hidden;
+    min-height: 650px;
 }
 </style>
 

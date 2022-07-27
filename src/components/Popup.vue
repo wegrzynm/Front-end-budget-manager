@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         no () {
-            this.$router.push('/expenses') 
+            this.$emit('select-route', true)
         },
         yes () {
             this.$emit('select-route', false)

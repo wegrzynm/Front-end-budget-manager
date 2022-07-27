@@ -76,13 +76,13 @@ export default {
         return data
         },
         async chooseGroup (id) {
-        this.isLoading = true
-        if(id == 0) {
-            this.expenses = await this.fetchExpenses()
-        }else {
-            this.expenses = await this.fetchExpensesGroup(id)
-        }
-        this.isLoading = false
+            this.isLoading = true
+            if(id == 0) {
+                this.expenses = await this.fetchExpenses()
+            }else {
+                this.expenses = await this.fetchExpensesGroup(id)
+            }
+            this.isLoading = false
         },
         getTotalExpenses() {
             let totalExpenses = 0
