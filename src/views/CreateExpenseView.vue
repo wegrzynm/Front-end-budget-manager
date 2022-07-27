@@ -114,7 +114,7 @@ export default {
             }else {
                 doesBudgetExist = await this.createBudget()
             }
-            doesBudgetExist = `api/api/budgets/${doesBudgetExist}`
+            doesBudgetExist = `api/budgets/${doesBudgetExist}`
             doesSavingsExist = await this.createSavings(doesBudgetExist)
         }else {
             doesSavingsExist = doesSavingsExist[0].id
@@ -142,7 +142,7 @@ export default {
                 "price": this.productPrice
             }
 
-            const res = await fetch('api/api/products', {
+            const res = await fetch('api/products', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
@@ -152,7 +152,7 @@ export default {
 
             if(res.status === 201) {
                 const data = await res.json()
-                this.productName = `api/api/products/${data.id}`
+                this.productName = `api/products/${data.id}`
             }
         },
         async createBudget () {
@@ -170,7 +170,7 @@ export default {
                     "autoRenew": true
                 }
             }
-            const res = await fetch('api/api/budgets ', {
+            const res = await fetch('api/budgets ', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
@@ -190,7 +190,7 @@ export default {
                 "budget": budget
             }
 
-            const res = await fetch('api/api/savings', {
+            const res = await fetch('api/savings', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
@@ -213,7 +213,7 @@ export default {
                 "product": this.productName
             }
 
-            const res = await fetch('api/api/expenses', {
+            const res = await fetch('api/expenses', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
@@ -227,7 +227,7 @@ export default {
 
         async fetchProduct (productGroup, productName, productPrice) {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/api/products?page=1&productGroup.productGroup=${productGroup}&name=${productName}&price=${productPrice}`, { headers })
+            const res = await fetch(`api/products?page=1&productGroup.productGroup=${productGroup}&name=${productName}&price=${productPrice}`, { headers })
             const data = await res.json()
             return data
         },
@@ -236,7 +236,7 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/api/savings?date=${date}`, { headers })
+            const res = await fetch(`api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
@@ -245,25 +245,25 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json" };
-            let res = await fetch(`api/api/budgets?date=${date}`, { headers })
+            let res = await fetch(`api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchProducts () {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch('api/api/products', { headers })
+            const res = await fetch('api/products', { headers })
             const data = await res.json()
             return data
         },
         async fetchProductGroups () {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch('api/api/product_groups', { headers })
+            const res = await fetch('api/product_groups', { headers })
             const data = await res.json()
             return data
         },
         async fetchPaymentMethods () {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch('api/api/payment_methods', { headers })
+            const res = await fetch('api/payment_methods', { headers })
             const data = await res.json()
             return data
         },

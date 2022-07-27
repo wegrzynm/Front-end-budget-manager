@@ -59,19 +59,19 @@ export default {
     methods: {
         async fetchGroups () {
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch('api/api/product_groups', { headers })
+        const res = await fetch('api/product_groups', { headers })
         const data = await res.json()
         return data
         },
         async fetchExpensesGroup (id) {
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch(`api/api/expenses?product.productGroup=${id}`, { headers })
+        const res = await fetch(`api/expenses?product.productGroup=${id}`, { headers })
         const data = await res.json()
         return data
         },
         async fetchExpenses () {
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch('api/api/expenses', { headers })
+        const res = await fetch('api/expenses', { headers })
         const data = await res.json()
         return data
         },

@@ -52,14 +52,14 @@ export default {
         async fetchSavings () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/api/savings?date=${date}`, { headers })
+            const res = await fetch(`api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchBudget () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/api/budgets?date=${date}`, { headers })
+            const res = await fetch(`api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
@@ -74,7 +74,7 @@ export default {
         },
         async addIncome(newIncome)
         {
-            const res = await fetch('api/api/incomes', {
+            const res = await fetch('api/incomes', {
                 method: 'POST',
                 headers: {
                 'Content-type': 'application/json'
@@ -91,7 +91,7 @@ export default {
            } )
         },
         async addNewBudget (newBudget) {
-            const res = await fetch('api/api/budgets', {
+            const res = await fetch('api/budgets', {
                 method: 'POST',
                 headers: {
                 'Content-type': 'application/json'
@@ -102,7 +102,7 @@ export default {
             this.budget = [...this.newBudget, data]
         },
         async updateBudget (id, updateBudget) {
-        const res = await fetch(`api/api/budgets/${id}`, {
+        const res = await fetch(`api/budgets/${id}`, {
             method: 'PUT',
                 headers: {
                 'Content-type': 'application/json'
@@ -116,7 +116,7 @@ export default {
         async doesBudgetExist () {
         let date = this.getDate(false).slice(0,7)
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch(`api/api/budgets?date=${date}`, { headers })
+        const res = await fetch(`api/budgets?date=${date}`, { headers })
         const data = await res.json()
         return data
         },
