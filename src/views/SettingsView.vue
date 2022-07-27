@@ -1,8 +1,26 @@
 ﻿<template>
     <div class="template">
-        xddd
+        <h1>Settings</h1>
+        <ProductGroups />
+        <PaymentMethods />
+        <Language />
     </div>
 </template>
+
+<script>
+import ProductGroups from '../components/settings/productGroup/ProductGroups.vue'
+import PaymentMethods from '@/components/settings/paymentMethod/PaymentMethods.vue'
+import Language from '@/components/settings/Language.vue'
+
+export default {
+    name: 'App-Settings',
+    components: {
+    ProductGroups,
+    PaymentMethods,
+    Language
+}
+}
+</script>
 
 <style scoped>
 .template {
@@ -13,6 +31,6 @@
     border-radius: 10px;
     border: 2px solid #2c3e50;
     overflow: hidden;
-    height: 500px;
+    min-height: 500px;
 }
 </style>
