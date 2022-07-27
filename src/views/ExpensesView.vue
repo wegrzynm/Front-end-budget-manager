@@ -13,6 +13,10 @@
             color="#4CAF50"
             />
             
+        <div v-if="!isLoading">
+            Total expenses: {{ totalExpenses }}{{ currency }}
+        </div>    
+
         <easy-data-table
         alternating
         :headers="headers"
@@ -39,6 +43,7 @@ export default {
       groups: [],
       expenses: [],
       isLoading: true,
+      totalExpenses: 0,
       headers: [
                 { text: "ID", value: "id", sortable: true },        
                 { text: "Product name", value: "product.name" },        
@@ -54,19 +59,19 @@ export default {
     methods: {
         async fetchGroups () {
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch('api/product_groups', { headers })
+        const res = await fetch('api/api/product_groups', { headers })
         const data = await res.json()
         return data
         },
         async fetchExpensesGroup (id) {
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch(`api/expenses?product.productGroup=${id}`, { headers })
+        const res = await fetch(`api/api/expenses?product.productGroup=${id}`, { headers })
         const data = await res.json()
         return data
         },
         async fetchExpenses () {
         const headers = { "Content-Type": "application/json" };
-        const res = await fetch('api/expenses', { headers })
+        const res = await fetch('api/api/expenses', { headers })
         const data = await res.json()
         return data
         },
@@ -79,10 +84,18 @@ export default {
         }
         this.isLoading = false
         },
+        getTotalExpenses() {
+            let totalExpenses = 0
+            for(let i = 0; i< this.expenses.length; i++) {
+                totalExpenses += this.expenses[i].cost
+            }
+            return Math.round(totalExpenses*100)/100
+        }
     },
     async created () {
         this.expenses = await this.fetchExpenses()
         this.groups = await this.fetchGroups()
+        this.totalExpenses = this.getTotalExpenses()
         this.isLoading = false
     }
 }

@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import ExpensesView from '../views/ExpensesView.vue'
 import SavingsView from '../views/SavingsView.vue'
 import CreateExpenseView from '../views/CreateExpenseView.vue'
+import AboutView from '../views/AboutView.vue'
+import SettingsView from '../views/SettingsView.vue'
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/savings',
     name: 'savings',
     component: SavingsView
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: AboutView
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: SettingsView
   }
 ]
 

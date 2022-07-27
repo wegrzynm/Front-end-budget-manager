@@ -13,6 +13,13 @@
     <div class="item">
       <router-link to="/savings">Savings</router-link>
     </div>
+    <footer>
+      <router-link to="/about">
+            About
+      </router-link>
+      &copy; 2022 M.Wegrzyn 
+    </footer>
+    
   </div>
 </div> 
 </template>
@@ -67,5 +74,14 @@ h1 {
 
 .menu > .item > a:hover {
   color: #4CAF50;
+}
+
+footer {
+  font-size: 15px;
+  text-decoration: none;  
+}
+footer > a {
+  color: #2c3e50;
+  text-decoration: none;
 }
 </style>

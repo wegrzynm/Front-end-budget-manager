@@ -10,6 +10,7 @@
     :items="savings"
     :rows-per-page="12"
     :theme-color="'#4CAF50'"
+    :sort-by="'date'"
     class="table"
     />
 </template>

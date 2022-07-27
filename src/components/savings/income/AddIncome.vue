@@ -66,7 +66,7 @@ export default {
             }else {
                 doesBudgetExist = await this.createBudget()
             }
-            doesBudgetExist = `api/budgets/${doesBudgetExist}`
+            doesBudgetExist = `api/api/budgets/${doesBudgetExist}`
             doesSavingsExist = await this.createSavings(doesBudgetExist)
         }else {
             doesSavingsExist = doesSavingsExist[0].id
@@ -88,7 +88,7 @@ export default {
                     "autoRenew": true
                 }
             }
-            const res = await fetch('api/budgets ', {
+            const res = await fetch('api/api/budgets ', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
@@ -108,7 +108,7 @@ export default {
               "budget": budget
           }
 
-          const res = await fetch('api/savings', {
+          const res = await fetch('api/api/savings', {
           method: 'POST',
           headers: {
           'Content-type': 'application/json'
@@ -126,7 +126,7 @@ export default {
                 date = this.getDate().slice(0,7)
             }
             const headers = { "Content-Type": "application/json" };
-            let res = await fetch(`api/budgets?date=${date}`, { headers })
+            let res = await fetch(`api/api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
       },
@@ -135,7 +135,7 @@ export default {
                 date = this.getDate().slice(0,7)
             }
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/savings?date=${date}`, { headers })
+            const res = await fetch(`api/api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
       },  
