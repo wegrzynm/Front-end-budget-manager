@@ -4,6 +4,7 @@
     :headers="headers"
     :items="savings"
     rows="100"
+    :sort-by="'date'"
     :rows-per-page="12"
     :theme-color="'#4CAF50'"
     class="table"

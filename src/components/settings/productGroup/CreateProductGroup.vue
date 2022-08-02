@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .add-form {
     width: 100%;
     padding-top: 0;

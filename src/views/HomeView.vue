@@ -1,42 +1,57 @@
 <template>
 <div class="template">
-  <div>
-    <h1>Budget Manager</h1>
-  </div>
-  <div class="menu">
-    <div class="item">
-      <router-link to="/expenses/create">Create expense</router-link>
+  <div v-show="logged !== null">
+    <Button :text="'Logout'" @click="logout" :color="'black'"  class="btn-go-back" />
+    <div>
+      <h1>Budget Manager</h1>
     </div>
-    <div class="item">
-            <router-link to="/expenses">Expenses</router-link>
-    </div>
-    <div class="item">
-      <router-link to="/savings">Savings</router-link>
+    <div class="menu">
+      <div class="item">
+        <router-link to="/expenses/create">Create expense</router-link>
+      </div>
+      <div class="item">
+              <router-link to="/expenses">Expenses</router-link>
+      </div>
+      <div class="item">
+        <router-link to="/savings">Savings</router-link>
+      </div>    
     </div>
     <footer>
-      <router-link to="/about">
-            About
-      </router-link>
-      &copy; 2022 M.Wegrzyn 
+        <router-link to="/about">
+              About
+        </router-link>
+        &copy; 2022 M.Wegrzyn 
     </footer>
-    
   </div>
-</div> 
+  <div v-show="logged == false">
+    <LoginView @logged="login" />
+  </div>
+</div>
 </template>
 
-<style scoped>
-.template {
-  margin-top: 50px !important;
-  color: #2c3e50;
-  background-color: #f2f2f2;
-  width: 80%;
-  height: 100%;
-  margin: auto;
-  padding-top: 10px;
-  border-radius: 10px;
-  border: 2px solid #2c3e50;
+<script>
+import LoginView from './LoginView.vue'
+import Button from '../components/Button.vue'
+export default {
+  data() {
+      return {
+          logged: localStorage.getItem('user')
+      };
+  },
+  methods: {
+    login() {
+      this.logged != this.logged
+    },
+    logout() {
+      localStorage.clear()
+      this.$router.push('/login') 
+    }
+  },
+  components: { LoginView, Button }
 }
+</script>
 
+<style scoped>
 h1 {
   font-size: 3em;
   width: 75%;
@@ -74,14 +89,5 @@ h1 {
 
 .menu > .item > a:hover {
   color: #4CAF50;
-}
-
-footer {
-  font-size: 15px;
-  text-decoration: none;  
-}
-footer > a {
-  color: #2c3e50;
-  text-decoration: none;
 }
 </style>

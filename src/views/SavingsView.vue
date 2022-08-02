@@ -52,14 +52,18 @@ export default {
         async fetchSavings () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`api/savings?date=${date}`, { headers })
+            const user = localStorage.getItem('user')
+            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+            const res = await fetch(`api/savings?date=${date}&user=${userId}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchBudget () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`api/budgets?date=${date}`, { headers })
+            const user = localStorage.getItem('user')
+            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+            const res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
             const data = await res.json()
             return data
         },
@@ -83,13 +87,15 @@ export default {
                 body: JSON.stringify(newIncome)
                 })
             const data = await res.json()
-           const savingsId = data.savings.slice(13)
-           this.savings.find((s) => {
-                if(s.id == savingsId ) {
-                    s.income.push(`api/incomes/${data.id}`)
-                    s.sumIncome += data.income
-                }
-           } )
+            console.log(this.savings)
+            if(this.savings.length > 0 ) {
+                this.savings = await this.fetchSavings()
+            } else {
+                this.savings = await this.fetchSavings()
+                this.budget = await this.fetchBudget()
+            }
+            return data
+            
         },
         async addNewBudget (newBudget) {
             const res = await fetch('api/budgets', {
@@ -120,7 +126,9 @@ export default {
         async doesBudgetExist () {
         let date = this.getDate(false).slice(0,7)
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-        const res = await fetch(`api/budgets?date=${date}`, { headers })
+        const user = localStorage.getItem('user')
+        const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+        const res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
         const data = await res.json()
         return data
         },
@@ -134,15 +142,6 @@ export default {
 </script>
 
 <style scoped>
-.template {
-    background-color: #f2f2f2;
-    width: 80%;
-    margin: auto;
-    padding-top: 10px;
-    border-radius: 10px;
-    border: 2px solid #2c3e50;
-    padding-bottom: 30px;
-}
 .split {
     width: 100%;
     display: inline-block;

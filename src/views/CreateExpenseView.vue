@@ -165,20 +165,22 @@ export default {
             let newBudget = {
                 "budget": 0,
                 "date": this.boughtDate,
-                "autoRenew": false
+                "autoRenew": false,
+                "user": localStorage.getItem('user')
             }
             if(isBudgetAutoRenew.length > 0) {
                 newBudget = {
                     "budget": isBudgetAutoRenew[0].budget,
                     "date": this.boughtDate,
-                    "autoRenew": true
+                    "autoRenew": true,
+                    "user": localStorage.getItem('user')
                 }
             }
-            const res = await fetch('api/budgets ', {
+            const res = await fetch('api/budgets', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json',
-'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify(newBudget)
              })
@@ -192,7 +194,8 @@ export default {
             const newSavings = {
                 "isTargetPassed": false,
                 "date": this.boughtDate,
-                "budget": budget
+                "budget": budget,
+                "user": localStorage.getItem('user')
             }
 
             const res = await fetch('api/savings', {
@@ -217,7 +220,8 @@ export default {
                 "boughtDate": this.boughtDate,
                 "paymentMethod": this.paymentMethod,
                 "savings": savings,
-                "product": this.productName
+                "product": this.productName,
+                "user": localStorage.getItem('user')
             }
 
             const res = await fetch('api/expenses', {
@@ -235,7 +239,7 @@ export default {
 
         async fetchProduct (productGroup, productName, productPrice) {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/products?page=1&productGroup.productGroup=${productGroup}&name=${productName}&price=${productPrice}`, { headers })
+            const res = await fetch(`api/products?productGroup.id=${productGroup}&name=${productName}&price=${productPrice}`, { headers })
             const data = await res.json()
             return data
         },
@@ -244,7 +248,9 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`api/savings?date=${date}`, { headers })
+            const user = localStorage.getItem('user')
+            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+            const res = await fetch(`api/savings?date=${date}&user=${userId}`, { headers })
             const data = await res.json()
             return data
         },
@@ -253,7 +259,9 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            let res = await fetch(`api/budgets?date=${date}`, { headers })
+            const user = localStorage.getItem('user')
+            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+            let res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
             const data = await res.json()
             return data
         },

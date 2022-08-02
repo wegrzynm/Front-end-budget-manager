@@ -26,6 +26,7 @@
         :theme-color="'#4CAF50'"
         class="table"
         v-if="!isLoading"
+        show-index
         />
     </div>
 </template>
@@ -44,8 +45,7 @@ export default {
       expenses: [],
       isLoading: true,
       totalExpenses: 0,
-      headers: [
-                { text: "ID", value: "id", sortable: true },        
+      headers: [   
                 { text: "Product name", value: "product.name" },        
                 { text: "Quantity", value: "quantity" },        
                 { text: "Product group", value: "product.productGroup.productGroup" },        
@@ -57,6 +57,17 @@ export default {
     }
     },
     methods: {
+        getDate(lastMonth) {
+            let dt =  new Date()
+            let year =  dt.getFullYear()
+            let month = (dt.getMonth() + 1).toString().padStart(2, "0")
+
+            if(lastMonth == true) {
+                month = (dt.getMonth()).toString().padStart(2, "0")
+            }
+            let day = dt.getDate().toString().padStart(2, "0")
+            return `${year}-${month}-${day}`
+        },
         async fetchGroups () {
         const headers = { "Content-Type": "application/json" };
         const res = await fetch('api/product_groups', { headers })
@@ -65,13 +76,19 @@ export default {
         },
         async fetchExpensesGroup (id) {
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-        const res = await fetch(`api/expenses?product.productGroup=${id}`, { headers })
+        const date = this.getDate(false).slice(0,7)
+        const user = localStorage.getItem('user')
+        const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+        const res = await fetch(`api/expenses?boughtDate=${date}&product.productGroup=${id}&user=${userId}`, { headers })
         const data = await res.json()
         return data
         },
         async fetchExpenses () {
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-        const res = await fetch('api/expenses', { headers })
+        const date = this.getDate(false).slice(0,7)
+        const user = localStorage.getItem('user')
+        const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+        const res = await fetch(`api/expenses?boughtDate=${date}&user=${userId}`, { headers })
         const data = await res.json()
         return data
         },

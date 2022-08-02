@@ -1,7 +1,7 @@
 <template>
   <router-link to="/" v-show="homePage">
         <Button :text="'Go back'" :color="'black'"  class="btn-go-back"/>
-    </router-link>
+  </router-link>
   <router-view/>
 </template>
 
@@ -9,16 +9,24 @@
 import Button from './components/Button.vue'
 export default {
   components: {
-    Button
+    Button,
+},
+  data () {
+    return {
+      user: localStorage.getItem('user')
+    }
   },
   computed: {
     homePage () {
-      if (this.$route.path != '/') {
+      if (this.$route.path != '/' && this.$route.path != '/login' ) {
         return true
       } else {
         return false
       }
     }
+  },
+  async created () {
+    console.log(this.user)
   }
 }
 </script>
@@ -37,6 +45,25 @@ body {
   width: 100%;
   height: 100%;
   background-color: gray;
+}
+
+.template {
+    background-color: #f2f2f2;
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
+    border-radius: 10px;
+    border: 2px solid #2c3e50;
+    padding-bottom: 30px;
+}
+
+footer {
+  font-size: 15px;
+  text-decoration: none;  
+}
+footer > a {
+  color: #2c3e50;
+  text-decoration: none;
 }
 
 input[type=number], input[type=text], select, input[type=date], input[list], input[type=email], input[type=password] {

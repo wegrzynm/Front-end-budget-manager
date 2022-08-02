@@ -52,6 +52,8 @@ export default {
         "savings": `api/savings/${await this.getSavings()}`,
         "user": localStorage.getItem('user')
         }
+
+        console.log(newIncome)
         this.$emit('add-income', newIncome)
 
         this.income = 0
@@ -62,6 +64,7 @@ export default {
       let doesSavingsExist = await this.doesSavingsExist(null);
         if(doesSavingsExist.length == 0) {
             let doesBudgetExist = await this.doesBudgetExist(null)
+            console.log(doesBudgetExist.length)
             if(doesBudgetExist.length > 0) {
                 doesBudgetExist = doesBudgetExist[0].id
             }else {
@@ -131,7 +134,9 @@ export default {
                 date = this.getDate().slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            let res = await fetch(`api/budgets?date=${date}`, { headers })
+            const user = localStorage.getItem('user')
+            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+            let res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
             const data = await res.json()
             return data
       },
@@ -140,7 +145,9 @@ export default {
                 date = this.getDate().slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`api/savings?date=${date}`, { headers })
+            const user = localStorage.getItem('user')
+            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
+            const res = await fetch(`api/savings?date=${date}&user=${userId}`, { headers })
             const data = await res.json()
             return data
       },  
