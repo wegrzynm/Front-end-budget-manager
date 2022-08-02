@@ -51,14 +51,14 @@ export default {
         },
         async fetchSavings () {
             let date = this.getDate(false).slice(0,4)
-            const headers = { "Content-Type": "application/json" };
+            const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
             const res = await fetch(`api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchBudget () {
             let date = this.getDate(false).slice(0,4)
-            const headers = { "Content-Type": "application/json" };
+            const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
             const res = await fetch(`api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
@@ -77,7 +77,8 @@ export default {
             const res = await fetch('api/incomes', {
                 method: 'POST',
                 headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(newIncome)
                 })
@@ -94,18 +95,21 @@ export default {
             const res = await fetch('api/budgets', {
                 method: 'POST',
                 headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(newBudget)
                 })
             const data = await res.json()
-            this.budget = [...this.newBudget, data]
+            this.budget.push(data)
+            return data
         },
         async updateBudget (id, updateBudget) {
         const res = await fetch(`api/budgets/${id}`, {
             method: 'PUT',
                 headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(updateBudget)
             })
@@ -115,7 +119,7 @@ export default {
         },
         async doesBudgetExist () {
         let date = this.getDate(false).slice(0,7)
-        const headers = { "Content-Type": "application/json" };
+        const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const res = await fetch(`api/budgets?date=${date}`, { headers })
         const data = await res.json()
         return data

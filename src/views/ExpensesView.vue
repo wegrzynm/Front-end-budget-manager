@@ -64,13 +64,13 @@ export default {
         return data
         },
         async fetchExpensesGroup (id) {
-        const headers = { "Content-Type": "application/json" };
+        const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const res = await fetch(`api/expenses?product.productGroup=${id}`, { headers })
         const data = await res.json()
         return data
         },
         async fetchExpenses () {
-        const headers = { "Content-Type": "application/json" };
+        const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const res = await fetch('api/expenses', { headers })
         const data = await res.json()
         return data

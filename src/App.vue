@@ -39,7 +39,7 @@ body {
   background-color: gray;
 }
 
-input[type=number], input[type=text], select, input[type=date], input[list] {
+input[type=number], input[type=text], select, input[type=date], input[list], input[type=email], input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

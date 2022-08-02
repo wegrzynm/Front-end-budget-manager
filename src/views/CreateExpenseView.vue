@@ -177,7 +177,8 @@ export default {
             const res = await fetch('api/budgets ', {
             method: 'POST',
             headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify(newBudget)
              })
@@ -197,7 +198,8 @@ export default {
             const res = await fetch('api/savings', {
             method: 'POST',
             headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify(newSavings)
              })
@@ -221,7 +223,8 @@ export default {
             const res = await fetch('api/expenses', {
             method: 'POST',
             headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify(newExpense)
              })
@@ -240,7 +243,7 @@ export default {
             if(date === null) {
                 date = this.boughtDate.slice(0,7)
             }
-            const headers = { "Content-Type": "application/json" };
+            const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
             const res = await fetch(`api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
@@ -249,7 +252,7 @@ export default {
             if(date === null) {
                 date = this.boughtDate.slice(0,7)
             }
-            const headers = { "Content-Type": "application/json" };
+            const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
             let res = await fetch(`api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data

@@ -46,8 +46,10 @@ export default {
         const newBudget = {
             budget: this.budget,
             date: this.getDate(false).slice(0,10),
-            autoRenew: this.autoRenew
+            autoRenew: this.autoRenew,
+            "user": localStorage.getItem('user')
         }
+
         this.$emit('add-budget', newBudget)
 
         this.budget = 0

@@ -49,7 +49,8 @@ export default {
         "income": this.income,
         "date": this.getDate(false),
         "description": this.description,
-        "savings": `api/savings/${await this.getSavings()}`
+        "savings": `api/savings/${await this.getSavings()}`,
+        "user": localStorage.getItem('user')
         }
         this.$emit('add-income', newIncome)
 
@@ -78,20 +79,23 @@ export default {
             let isBudgetAutoRenew = await this.doesBudgetExist(date)
             let newBudget = {
                 "budget": 0,
-                "date": this.boughtDate,
-                "autoRenew": false
+                "date": this.getDate(false),
+                "autoRenew": false,
+                "user": localStorage.getItem('user')
             }
             if(isBudgetAutoRenew.length > 0) {
                 newBudget = {
                     "budget": isBudgetAutoRenew[0].budget,
-                    "date": this.boughtDate,
-                    "autoRenew": true
+                    "date": this.getDate(false),
+                    "autoRenew": true,
+                    "user": localStorage.getItem('user')
                 }
             }
             const res = await fetch('api/budgets ', {
             method: 'POST',
             headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify(newBudget)
              })
@@ -104,20 +108,21 @@ export default {
       async createSavings(budget) {
         const newSavings = {
               "isTargetPassed": false,
-              "date": this.boughtDate,
-              "budget": budget
+              "date": this.getDate(false),
+              "budget": budget,
+              "user": localStorage.getItem('user')
           }
-
           const res = await fetch('api/savings', {
           method: 'POST',
           headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
+          'Authorization': localStorage.getItem('token')
           },
           body: JSON.stringify(newSavings)
             })
 
           if(res.status === 201) {
-              const data = await res.json()
+            const data = await res.json()
               return data.id
           }       
       },
@@ -125,7 +130,7 @@ export default {
             if(date === null) {
                 date = this.getDate().slice(0,7)
             }
-            const headers = { "Content-Type": "application/json" };
+            const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
             let res = await fetch(`api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
@@ -134,7 +139,7 @@ export default {
             if(date === null) {
                 date = this.getDate().slice(0,7)
             }
-            const headers = { "Content-Type": "application/json" };
+            const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
             const res = await fetch(`api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
