@@ -54,6 +54,7 @@ export default {
                 { text: "Payment method", value: "paymentMethod.paymentMethod" },        
                 { text: "Bought date", value: "boughtDate", sortable: true }     
             ],
+      currency: localStorage.getItem('currency')
     }
     },
     methods: {

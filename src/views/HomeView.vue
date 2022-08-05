@@ -1,6 +1,6 @@
 <template>
 <div class="template">
-  <div v-show="logged !== null">
+  <div v-show="logged">
     <Button :text="'Logout'" @click="logout" :color="'black'"  class="btn-go-back" />
     <div>
       <h1>Budget Manager</h1>
@@ -23,31 +23,35 @@
         &copy; 2022 M.Wegrzyn 
     </footer>
   </div>
-  <div v-show="logged == false">
-    <LoginView @logged="login" />
-  </div>
 </div>
 </template>
 
 <script>
-import LoginView from './LoginView.vue'
 import Button from '../components/Button.vue'
 export default {
   data() {
       return {
-          logged: localStorage.getItem('user')
+          logged: false
       };
   },
   methods: {
-    login() {
-      this.logged != this.logged
-    },
     logout() {
       localStorage.clear()
+      this.logged = false
       this.$router.push('/login') 
+    },
+    getStatus() {
+      if(localStorage.getItem('logged') != false && localStorage.getItem('logged') !== null) {
+        this.logged = true
+      } else {
+        this.$router.push('login')
+      }
     }
   },
-  components: { LoginView, Button }
+  async created() {
+    this.getStatus()
+  },
+  components: { Button }
 }
 </script>
 

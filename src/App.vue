@@ -13,7 +13,7 @@ export default {
 },
   data () {
     return {
-      user: localStorage.getItem('user')
+      user: localStorage.getItem('user'),
     }
   },
   computed: {
@@ -25,9 +25,6 @@ export default {
       }
     }
   },
-  async created () {
-    console.log(this.user)
-  }
 }
 </script>
 

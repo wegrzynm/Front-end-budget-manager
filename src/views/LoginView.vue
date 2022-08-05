@@ -1,4 +1,5 @@
 <template>
+<div class="template">
     <h1>Login</h1>
     <form @submit="onSubmit" method="POST">
         <div class="form-control">
@@ -11,6 +12,7 @@
         </div>
         <input type="submit" value="Login" class="btn btn-block" />
     </form>
+</div>
 </template>
 
 <script>
@@ -44,7 +46,9 @@ export default {
                 const user = await fetch('api/users/me', { headers })
                 if(user.status == 200) {
                     const userId = await user.json()
-                    localStorage.setItem('user', `api/users/${userId}`)
+                    localStorage.setItem('user', `api/users/${userId.id}`)
+                    localStorage.setItem('currency', userId.currency)
+                    localStorage.setItem('logged', true)
                     this.$router.push('/')
                 }else {
                     alert('Error')
@@ -52,7 +56,6 @@ export default {
             }else {
                 alert('Error')
             }
-            
         }
     },
     emits: ['logged']
@@ -60,4 +63,7 @@ export default {
 </script>
 
 <style scoped>
+.template {
+    border: none
+}
 </style>
