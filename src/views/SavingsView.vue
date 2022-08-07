@@ -52,18 +52,14 @@ export default {
         async fetchSavings () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const user = localStorage.getItem('user')
-            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-            const res = await fetch(`api/savings?date=${date}&user=${userId}`, { headers })
+            const res = await fetch(`api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchBudget () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const user = localStorage.getItem('user')
-            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-            const res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
+            const res = await fetch(`api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
@@ -87,7 +83,6 @@ export default {
                 body: JSON.stringify(newIncome)
                 })
             const data = await res.json()
-            console.log(this.savings)
             if(this.savings.length > 0 ) {
                 this.savings = await this.fetchSavings()
             } else {
@@ -107,7 +102,8 @@ export default {
                 body: JSON.stringify(newBudget)
                 })
             const data = await res.json()
-            this.budget.push(data)
+            this.budget = await this.fetchBudget()
+            this.savings = await this.fetchSavings()
             return data
         },
         async updateBudget (id, updateBudget) {
@@ -121,14 +117,14 @@ export default {
             })
             const data = await res.json()
             
-            this.budget = this.budget.map((budget) => budget.id === id ? { ...budget, budget: data.budget } : budget)
+            this.budget = await this.fetchBudget()
+            this.savings = await this.fetchSavings()
+            return data
         },
         async doesBudgetExist () {
         let date = this.getDate(false).slice(0,7)
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-        const user = localStorage.getItem('user')
-        const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-        const res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
+        const res = await fetch(`api/budgets?date=${date}`, { headers })
         const data = await res.json()
         return data
         },

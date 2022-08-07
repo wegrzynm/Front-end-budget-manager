@@ -146,7 +146,7 @@ export default {
                 "price": this.productPrice
             }
 
-            const res = await fetch('api/products', {
+            const res = await fetch('../api/products', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
@@ -176,7 +176,7 @@ export default {
                     "user": localStorage.getItem('user')
                 }
             }
-            const res = await fetch('api/budgets', {
+            const res = await fetch('../api/budgets', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json',
@@ -198,11 +198,11 @@ export default {
                 "user": localStorage.getItem('user')
             }
 
-            const res = await fetch('api/savings', {
+            const res = await fetch('../api/savings', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json',
-'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('token')
             },
             body: JSON.stringify(newSavings)
              })
@@ -224,7 +224,7 @@ export default {
                 "user": localStorage.getItem('user')
             }
 
-            const res = await fetch('api/expenses', {
+            const res = await fetch('../api/expenses', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json',
@@ -239,7 +239,7 @@ export default {
 
         async fetchProduct (productGroup, productName, productPrice) {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch(`api/products?productGroup.id=${productGroup}&name=${productName}&price=${productPrice}`, { headers })
+            const res = await fetch(`../api/products?productGroup.id=${productGroup}&name=${productName}&price=${productPrice}`, { headers })
             const data = await res.json()
             return data
         },
@@ -248,9 +248,7 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const user = localStorage.getItem('user')
-            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-            const res = await fetch(`api/savings?date=${date}&user=${userId}`, { headers })
+            const res = await fetch(`../api/savings?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
@@ -259,27 +257,25 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const user = localStorage.getItem('user')
-            const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-            let res = await fetch(`api/budgets?date=${date}&user=${userId}`, { headers })
+            let res = await fetch(`../api/budgets?date=${date}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchProducts () {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch('api/products', { headers })
+            const res = await fetch('../api/products', { headers })
             const data = await res.json()
             return data
         },
         async fetchProductGroups () {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch('api/product_groups', { headers })
+            const res = await fetch('../api/product_groups', { headers })
             const data = await res.json()
             return data
         },
         async fetchPaymentMethods () {
             const headers = { "Content-Type": "application/json" };
-            const res = await fetch('api/payment_methods', { headers })
+            const res = await fetch('../api/payment_methods', { headers })
             const data = await res.json()
             return data
         },

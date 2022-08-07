@@ -25,6 +25,27 @@ export default {
       }
     }
   },
+  methods: {
+    logout() {
+      localStorage.clear()
+      this.$router.push('/login') 
+    }
+  },
+  async created () {
+   const that = this;
+   setInterval(function() {
+    console.log('check')
+    if(localStorage.getItem('created') !== null) {
+        const created = localStorage.getItem('created')
+        const now = Date.now()/1000
+        const exp = 3350 //refresh token time so we need to refresh token eariler in my case 5 minutes before it expires
+        let timeUntilRefresh = now - created
+        if(parseInt(timeUntilRefresh) > exp) {
+          that.logout()
+        }
+      }
+   }, 300000)
+  }
 }
 </script>
 

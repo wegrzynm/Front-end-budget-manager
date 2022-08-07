@@ -4,6 +4,7 @@
         <ProductGroups />
         <PaymentMethods />
         <Language />
+        <Currency />
     </div>
 </template>
 
@@ -11,13 +12,15 @@
 import ProductGroups from '../components/settings/productGroup/ProductGroups.vue'
 import PaymentMethods from '@/components/settings/paymentMethod/PaymentMethods.vue'
 import Language from '@/components/settings/Language.vue'
+import Currency from '../components/settings/Currency.vue'
 
 export default {
     name: 'App-Settings',
     components: {
     ProductGroups,
     PaymentMethods,
-    Language
+    Language,
+    Currency
 }
 }
 </script>

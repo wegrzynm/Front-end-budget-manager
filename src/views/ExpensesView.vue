@@ -45,7 +45,7 @@ export default {
       expenses: [],
       isLoading: true,
       totalExpenses: 0,
-      headers: [   
+      headers: [
                 { text: "Product name", value: "product.name" },        
                 { text: "Quantity", value: "quantity" },        
                 { text: "Product group", value: "product.productGroup.productGroup" },        
@@ -78,18 +78,14 @@ export default {
         async fetchExpensesGroup (id) {
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const date = this.getDate(false).slice(0,7)
-        const user = localStorage.getItem('user')
-        const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-        const res = await fetch(`api/expenses?boughtDate=${date}&product.productGroup=${id}&user=${userId}`, { headers })
+        const res = await fetch(`api/expenses?boughtDate=${date}&product.productGroup=${id}`, { headers })
         const data = await res.json()
         return data
         },
         async fetchExpenses () {
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const date = this.getDate(false).slice(0,7)
-        const user = localStorage.getItem('user')
-        const userId = user.slice(user.lastIndexOf('/')+1, user.length)
-        const res = await fetch(`api/expenses?boughtDate=${date}&user=${userId}`, { headers })
+        const res = await fetch(`api/expenses?boughtDate=${date}`, { headers })
         const data = await res.json()
         return data
         },

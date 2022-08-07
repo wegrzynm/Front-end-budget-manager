@@ -34,7 +34,8 @@ export default {
             const res = await fetch('https://127.0.0.1:8000/authentication_token', {
             method: 'POST',
             headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'Accept': '*/*'
             },
             body: JSON.stringify(login)
             })
@@ -49,6 +50,7 @@ export default {
                     localStorage.setItem('user', `api/users/${userId.id}`)
                     localStorage.setItem('currency', userId.currency)
                     localStorage.setItem('logged', true)
+                    localStorage.setItem('created', Date.now()/1000)
                     this.$router.push('/')
                 }else {
                     alert('Error')
