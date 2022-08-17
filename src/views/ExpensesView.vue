@@ -78,14 +78,14 @@ export default {
         async fetchExpensesGroup (id) {
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const date = this.getDate(false).slice(0,7)
-        const res = await fetch(`api/expenses?boughtDate=${date}&product.productGroup=${id}`, { headers })
+        const res = await fetch(`api/expenses?boughtDate[after]=${date}&product.productGroup=${id}`, { headers })
         const data = await res.json()
         return data
         },
         async fetchExpenses () {
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
         const date = this.getDate(false).slice(0,7)
-        const res = await fetch(`api/expenses?boughtDate=${date}`, { headers })
+        const res = await fetch(`api/expenses?boughtDate[after]=${date}`, { headers })
         const data = await res.json()
         return data
         },

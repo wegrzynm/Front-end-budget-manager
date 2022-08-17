@@ -52,14 +52,14 @@ export default {
         async fetchSavings () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`api/savings?date=${date}`, { headers })
+            const res = await fetch(`api/savings?date[after]=${date}`, { headers })
             const data = await res.json()
             return data
         },
         async fetchBudget () {
             let date = this.getDate(false).slice(0,4)
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`api/budgets?date=${date}`, { headers })
+            const res = await fetch(`api/budgets?date[after]=${date}`, { headers })
             const data = await res.json()
             return data
         },
@@ -124,7 +124,7 @@ export default {
         async doesBudgetExist () {
         let date = this.getDate(false).slice(0,7)
         const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-        const res = await fetch(`api/budgets?date=${date}`, { headers })
+        const res = await fetch(`api/budgets?date[after]=${date}`, { headers })
         const data = await res.json()
         return data
         },

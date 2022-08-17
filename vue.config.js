@@ -3,7 +3,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '^/api': {
-        target: 'http://localhost:8000/api',
+        target: 'https://backend-budget-manager.herokuapp.com/api',
         changeOrigin: true,
         logLevel: 'debug',
         pathRewrite: { '^/api': '/' },

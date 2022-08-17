@@ -1,7 +1,14 @@
 <template>
 <div class="template">
     <h1>Login</h1>
-    <form @submit="onSubmit" method="POST">
+    <semipolar-spinner
+            v-if="isLoading"
+            class="loader"
+            :animation-duration="2000"
+            :size="300"
+            color="#4CAF50"
+            />
+    <form @submit="onSubmit" method="POST" v-if="!isLoading">
         <div class="form-control">
         <label>Email</label>
         <input v-model="email" type="email" name="username" autocomplete="username"/>
@@ -21,12 +28,14 @@ export default {
     data () {
         return {
             email: 'matzyn.yt@gmail.com',
-            password: 'admin123'
+            password: 'admin123',
+            isLoading: false
         }
     },
     methods: {
         async onSubmit(e) {
             e.preventDefault()
+            this.isLoading = true
             const login = {
                 "email": this.email,
                 "password": this.password
@@ -52,10 +61,13 @@ export default {
                     localStorage.setItem('logged', true)
                     localStorage.setItem('created', Date.now()/1000)
                     this.$router.push('/')
+                    this.isLoading = false
                 }else {
+                    this.isLoading = false
                     alert('Error')
                 }
             }else {
+                this.isLoading = false
                 alert('Error')
             }
         }

@@ -248,7 +248,7 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            const res = await fetch(`../api/savings?date=${date}`, { headers })
+            const res = await fetch(`../api/savings?date[after]=${date}`, { headers })
             const data = await res.json()
             return data
         },
@@ -257,7 +257,7 @@ export default {
                 date = this.boughtDate.slice(0,7)
             }
             const headers = { "Content-Type": "application/json", 'Authorization': localStorage.getItem('token') };
-            let res = await fetch(`../api/budgets?date=${date}`, { headers })
+            let res = await fetch(`../api/budgets?date[after]=${date}`, { headers })
             const data = await res.json()
             return data
         },
